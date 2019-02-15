@@ -12,16 +12,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Headers\Shader.h" />
     <ClInclude Include="src\Headers\TimeManager.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Shaders\uniform.fs" />
+    <None Include="..\..\Shaders\uniform.vs" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{604048a0-1106-4df6-bfdd-becd30d940c4}</ProjectGuid>
+    <ProjectGuid>{bd543663-d977-450d-87c3-d45a0ea64a2b}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>_03_Triangulo</RootNamespace>
+    <RootNamespace>_09_Uniforms</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>07-Uniforms</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

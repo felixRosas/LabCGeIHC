@@ -18,9 +18,9 @@
     <ClInclude Include="src\Headers\TimeManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{604048a0-1106-4df6-bfdd-becd30d940c4}</ProjectGuid>
+    <ProjectGuid>{7e13e9f0-fb5e-4e67-b7b3-3fe63f0b1d1c}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>_03_Triangulo</RootNamespace>
+    <RootNamespace>_02_ManejoEventos</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

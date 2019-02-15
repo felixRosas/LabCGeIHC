@@ -18,10 +18,11 @@
     <ClInclude Include="src\Headers\TimeManager.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{604048a0-1106-4df6-bfdd-becd30d940c4}</ProjectGuid>
+    <ProjectGuid>{684c68e3-d5a7-423b-a93e-ab78e4cb8c3e}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>_03_Triangulo</RootNamespace>
+    <RootNamespace>_07_AtributosVertices</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>04-AtributosVertices</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

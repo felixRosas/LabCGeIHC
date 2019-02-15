@@ -12,21 +12,34 @@
 #include "Headers/TimeManager.h"
 
 // Shaders code
-const GLchar* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 position;\n"
-"void main()\n"
+const GLchar* vertexShaderSource = { "#version 400\n"
+
+"layout(location=0) in vec3 position;\n"
+"layout(location=1) in vec3 color;\n"
+"out vec3 ourColor;\n"
+
+"void main(void)\n"
 "{\n"
-"gl_Position = vec4(position, 1.0);\n"
-"}\0";
-const GLchar* fragmentShaderSource = "#version 330 core\n"
-"out vec4 color;\n"
-"void main()\n"
+"  gl_Position = vec4(position, 1.0);\n"
+"  ourColor = color;\n"
+"}\n" };
+const GLchar* fragmentShaderSource = { "#version 400\n"
+
+"in vec3 ourColor;\n"
+"out vec4 out_Color;\n"
+
+"void main(void)\n"
 "{\n"
-"color = vec4(0.3f, 0.6f, 0.9f, 1.0f);\n"
-"}\n\0";
+"  out_Color = vec4(ourColor, 1.0);\n"
+"}\n" };
 
 GLuint VBO, VAO;
 GLint vertexShader, fragmentShader, shaderProgram;
+
+typedef struct {
+	float XYZ[3];
+	float RGB[3];
+} Vertex;
 
 int screenWidth;
 int screenHeight;
@@ -46,6 +59,7 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 void mouseButtonCallback(GLFWwindow* window, int button, int state, int mod);
 void init(int width, int height, std::string strTitle, bool bFullScreen);
 void destroyWindow();
+void destroy();
 bool processInput(bool continueApplication = true);
 
 // Implementacion de todas las funciones.
@@ -136,20 +150,36 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 			<< std::endl;
 	}
 
-	// Vertex data
-	GLfloat vertices[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f };
+	Vertex vertices[] =
+	{
+		{ {-0.5f, -0.5f, 0.0f } ,{ 1.0f, 0.0f, 0.0f } },
+		{ { 0.5f, -0.5f, 0.0f } ,{ 0.0f, 1.0f, 0.0f } },
+		{ { 0.0f,  0.5f, 0.0f } ,{ 0.0f, 0.0f, 1.0f } }
+	};
 
-	// Create Buffers and attributes vertex.
-	glGenVertexArrays(1, &VAO);
+	const size_t bufferSize = sizeof(vertices);
+	const size_t vertexSize = sizeof(vertices[0]);
+	const size_t rgbOffset = sizeof(vertices[0].XYZ);
+
+	std::cout << "Buffer Size:" << bufferSize << std::endl;
+	std::cout << "Vertex Size:" << vertexSize << std::endl;
+	std::cout << "Buffer size:" << rgbOffset << std::endl;
+
 	glGenBuffers(1, &VBO);
+
+	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, bufferSize, vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat),
-		(GLvoid*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vertexSize, 0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, vertexSize,
+		(GLvoid*)rgbOffset);
+
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
@@ -171,6 +201,7 @@ void destroy() {
 
 	glDeleteProgram(shaderProgram);
 
+	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -234,7 +265,7 @@ void applicationLoop() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		// Draw our first triangle
+		
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);

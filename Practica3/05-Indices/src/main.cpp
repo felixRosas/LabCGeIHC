@@ -12,21 +12,34 @@
 #include "Headers/TimeManager.h"
 
 // Shaders code
-const GLchar* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 position;\n"
-"void main()\n"
-"{\n"
-"gl_Position = vec4(position, 1.0);\n"
-"}\0";
-const GLchar* fragmentShaderSource = "#version 330 core\n"
-"out vec4 color;\n"
-"void main()\n"
-"{\n"
-"color = vec4(0.3f, 0.6f, 0.9f, 1.0f);\n"
-"}\n\0";
+const GLchar* vertexShaderSource = { "#version 400\n"
 
-GLuint VBO, VAO;
+"layout(location=0) in vec3 position;\n"
+"layout(location=1) in vec3 color;\n"
+"out vec3 ourColor;\n"
+
+"void main(void)\n"
+"{\n"
+"  gl_Position = vec4(position, 1.0);\n"
+"  ourColor = color;\n"
+"}\n" };
+const GLchar* fragmentShaderSource = { "#version 400\n"
+
+"in vec3 ourColor;\n"
+"out vec4 out_Color;\n"
+
+"void main(void)\n"
+"{\n"
+"  out_Color = vec4(ourColor, 1.0);\n"
+"}\n" };
+
+GLuint VBO, VAO, EBO;
 GLint vertexShader, fragmentShader, shaderProgram;
+
+typedef struct {
+	float XYZ[3];
+	float RGB[3];
+} Vertex;
 
 int screenWidth;
 int screenHeight;
@@ -46,6 +59,7 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 void mouseButtonCallback(GLFWwindow* window, int button, int state, int mod);
 void init(int width, int height, std::string strTitle, bool bFullScreen);
 void destroyWindow();
+void destroy();
 bool processInput(bool continueApplication = true);
 
 // Implementacion de todas las funciones.
@@ -136,22 +150,52 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 			<< std::endl;
 	}
 
-	// Vertex data
-	GLfloat vertices[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.0f, 0.5f, 0.0f };
+	// This is for the render with index element
+	Vertex vertices[] =
+	{
+		{ { -0.5f, -0.5f, 0.0f } , { 1.0f, 0.0f, 0.0f } },
+		{ { 0.5f , -0.5f, 0.0f } , { 0.0f, 1.0f, 0.0f } },
+		{ { 0.5f , 0.5f , 0.0f } , { 0.0f, 0.0f, 1.0f } },
+		{ {-0.5f , 0.5f , 0.0f } , { 1.0f, 0.0f, 1.0f } },
+	};
 
-	// Create Buffers and attributes vertex.
+	GLuint indices[] = {  // Note that we start from 0!
+		0, 1, 2,  // First Triangle
+		0, 2, 3   // Second Triangle
+	};
+
+	const size_t bufferSize = sizeof(vertices);
+	const size_t vertexSize = sizeof(vertices[0]);
+	const size_t rgbOffset = sizeof(vertices[0].XYZ);
+
+	std::cout << "Buffer Size:" << bufferSize << std::endl;
+	std::cout << "Vertex Size:" << vertexSize << std::endl;
+	std::cout << "Buffer size:" << rgbOffset << std::endl;
+
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	// This is for the render with index element
+	glGenBuffers(1, &EBO);
+	// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, bufferSize, vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat),
-		(GLvoid*)0);
+	// This is for the render with index element
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, vertexSize, 0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, vertexSize,
+		(GLvoid*)rgbOffset);
+
 	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glEnableVertexAttribArray(1);
+
 	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 }
 
 void destroyWindow() {
@@ -175,6 +219,9 @@ void destroy() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDeleteBuffers(1, &VBO);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glDeleteBuffers(1, &EBO);
 
 	glBindVertexArray(0);
 	glDeleteVertexArrays(1, &VAO);
@@ -234,10 +281,12 @@ void applicationLoop() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		
 		// Draw our first triangle
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		// This is for the render with index element
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 
 		glfwSwapBuffers(window);
