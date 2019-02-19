@@ -94,7 +94,7 @@ void applicationLoop() {
 }
 
 int main(int argc, char ** argv) {
-	init(800, 700, "Window GLFW", false);
+	init(800, 700, "Window GLFW", true);
 	applicationLoop();
 	destroy();
 	return 1;

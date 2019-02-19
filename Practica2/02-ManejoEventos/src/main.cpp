@@ -20,9 +20,11 @@ bool exitApp = false;
 int lastMousePosX;
 int lastMousePosY;
 
+bool isBlue = true;
+
 double deltaTime;
 
-// Se definen todos las funciones.
+// Se definen todos las funciones que se ejecutaran cuando pase algun evento. 
 void reshapeCallback(GLFWwindow* Window, int widthRes, int heightRes);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouseCallback(GLFWwindow* window, double xpos, double ypos);
@@ -64,6 +66,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(0);
 
+	//Esta parte es para indicarle que funciones se van a ejecutar cuando suceda un evento
 	glfwSetWindowSizeCallback(window, reshapeCallback);
 	glfwSetKeyCallback(window, keyCallback);
 	glfwSetCursorPosCallback(window, mouseCallback);
@@ -86,23 +89,29 @@ void destroy() {
 	glfwDestroyWindow(window);
 	glfwTerminate();
 }
-
+//recibe la ventana que se va a ejecutar , asi como el nuevo ancho y alto
 void reshapeCallback(GLFWwindow* Window, int widthRes, int heightRes) {
 	screenWidth = widthRes;
 	screenHeight = heightRes;
 	glViewport(0, 0, widthRes, heightRes);
 }
-
+	//Ventana donde sucede evento, la tecla y la accion.
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 	if (action == GLFW_PRESS) {
 		switch (key) {
 		case GLFW_KEY_ESCAPE:
 			exitApp = true;
 			break;
+		case GLFW_KEY_B:
+			isBlue = true;
+			break;
+		case GLFW_KEY_R:
+			isBlue = false;
+			break;
 		}
 	}
 }
-
+		//recibe ventana de evento y la posicion del mouse.
 void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
 	lastMousePosX = xpos;
 	lastMousePosY = ypos;
@@ -139,6 +148,10 @@ void applicationLoop() {
 	while (psi) {
 		psi = processInput(true);
 		glClear(GL_COLOR_BUFFER_BIT);
+		if (isBlue)
+			glClearColor(0.0, 0.0, 1.0, 1.0);
+		else
+			glClearColor(1.0, 0.0, 0.0, 1.0);
 		glfwSwapBuffers(window);
 	}
 }
