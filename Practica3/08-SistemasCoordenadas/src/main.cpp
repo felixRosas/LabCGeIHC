@@ -228,6 +228,8 @@ void applicationLoop() {
 	bool psi = true;
 	double lastTime = TimeManager::Instance().GetTime();
 
+	float fovy = 0;
+
 	glm::vec3 cubePositions[] =
 	{	glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-2.0f, -5.0f, -15.0f),
 		glm::vec3(-1.5f, 2.2f, -2.5f), glm::vec3(1.8f, 1.0f, -12.3f),
@@ -249,7 +251,8 @@ void applicationLoop() {
 		GLint projLoc = shader.getUniformLocation("projection");
 
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -7.0f));
-		glm::mat4 projection = glm::perspective(45.0f, (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 
+			(float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
