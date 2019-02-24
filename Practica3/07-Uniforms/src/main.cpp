@@ -226,7 +226,14 @@ void applicationLoop() {
 		GLfloat greenValue = (sin(timeValue) / 2);
 		GLfloat redValue = (cos(timeValue) / 2);
 		GLfloat blueValue = (sin(timeValue) / 2);
+		//El metodo getUniformLocation, retorna el id de la variable de nombre 
+		//globalColor, esta variable es global y esta declarada en el shader de fragmento
 		GLint vertexColorLocation = shader.getUniformLocation("globalColor");
+		//Una vez obtenido el id de la variable, hay que enviarle el valor, 
+		//que deseamos que tome la variabl global globalColor,
+		//Al un vect4 hay que enviar 4 valores.
+		//Los metodos de tipo glUniform* 
+		//PARAM: el id de la variable uniform, seguido de los cuatro valores flotantes
 		glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
 
 		glBindVertexArray(VAO);
