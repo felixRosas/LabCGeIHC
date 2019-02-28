@@ -224,7 +224,7 @@ void applicationLoop() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		
 		//ESTE METODO SIRVE PARA ACTIVAR LOS SHADER QUE DESEAMOS UTILIZAR
-		shader.turnOn();			//activamos el shader
+		//shader.turnOn();			//activamos el shader
 
 		glBindVertexArray(VAO);
 		// This is for the render with index element

@@ -44,6 +44,7 @@ typedef struct {
 int screenWidth;
 int screenHeight;
 
+
 GLFWwindow * window;
 
 bool exitApp = false;
@@ -212,21 +213,24 @@ void creaEstrella() {
 		{ {  0.2f , 0.8f, 0.0f } , { 0.0f, 0.0f, 0.0f } },
 		{ {  0.0f , 0.8f , 0.0f } , { 0.0f, 1.0f, 1.0f } },
 		{ {  0.0f , 1.0f , 0.0f } , { 1.0f, 0.0f, 0.0f } },
-
 		//parte abajo
 		{ { -0.2f , -0.8f, 0.0f } , { 0.0f, 1.0f, 1.0f } },
 		{ {  0.2f , -0.8f, 0.0f } , { 0.0f, 0.0f, 0.0f } },
 		{ {  0.0f , -0.8f , 0.0f } , { 0.0f, 1.0f, 1.0f } },
 		{ {  0.0f , -1.0f , 0.0f } , { 1.0f, 0.0f, 0.0f } },
-
 		//parte izquierda
-		{ { -0.8f , -0.1f, 0.0f } , { 0.0f, 1.0f, 1.0f } },
-		{ { -0.8f ,  0.1f, 0.0f } , { 0.0f, 0.0f, 0.0f } },
+		{ { -0.8f , -0.2f, 0.0f } , { 0.0f, 1.0f, 1.0f } },
+		{ { -0.8f ,  0.2f, 0.0f } , { 0.0f, 0.0f, 0.0f } },
 		{ { -0.8f ,  0.0f , 0.0f } , { 0.0f, 1.0f, 1.0f } },
 		{ { -1.0f ,  0.0f , 0.0f } , { 1.0f, 0.0f, 0.0f } },
+		//parte derecha
+		{ {  0.8f , -0.2f, 0.0f } , { 0.0f, 1.0f, 1.0f } },
+		{ {  0.8f ,  0.2f, 0.0f } , { 0.0f, 0.0f, 0.0f } },
+		{ {  0.8f ,  0.0f , 0.0f } , { 0.0f, 1.0f, 1.0f } },
+		{ {  1.0f ,  0.0f , 0.0f } , { 1.0f, 0.0f, 0.0f } },
 	};
 
-	GLuint indices[] = {			//Creamos arreglo para indicar los indices con los que se dibujara el rectangulo
+	GLuint indices[] = {	//Creamos arreglo para indicar los indices con los que se dibujara la estrella
 		//top
 		0, 3, 1,
 		0, 2, 3,
@@ -239,7 +243,11 @@ void creaEstrella() {
 		9, 0, 11,
 		11, 0, 10,
 		12, 9 ,11,
-		12, 11, 10
+		12, 11, 10,
+		0, 13, 15,
+		0, 15, 14,
+		13, 16, 15,
+		15, 16, 14
 	};
 
 	const size_t VertexSize = sizeof(vertices);		//Calcular el tamaño del arreglo =96
@@ -402,7 +410,7 @@ void applicationLoop() {
 		
 			//ESTA ES PARA DIBUJAR CON INDICES
 		//PARAM: PRIMITIVA, NUM INDICES, TIPO DE DATO, APUNTADOR
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 48, GL_UNSIGNED_INT, 0);
 		
 				//ESTA ES PRA DIBUJAR SIN INDICES
 		//glDrawArrays(GL_TRIANGLES, 0, 4);			//agregamos esta linea y comentamos anterior

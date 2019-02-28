@@ -47,7 +47,9 @@ void init(int width, int height, std::string strTitle, bool bFullScreen);
 void destroyWindow();
 void destroy();
 bool processInput(bool continueApplication = true);
-
+bool proyeccion = true;
+double planoCercano = 0.01;
+float grados = 45.0f;
 // Implementacion de todas las funciones.
 void init(int width, int height, std::string strTitle, bool bFullScreen) {
 
@@ -95,6 +97,8 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 		exit(-1);
 	}
 
+	//Define la zona de dibujo que deseamos utilizar 
+	//parametros: inicial en x, inicial en y, ancho y alto de la zona de dibujo.
 	glViewport(0, 0, screenWidth, screenHeight);
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
@@ -189,6 +193,24 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 		case GLFW_KEY_ESCAPE:
 			exitApp = true;
 			break;
+		case GLFW_KEY_F:
+			proyeccion = true;
+			break;
+		case GLFW_KEY_P:
+			proyeccion = false;
+			break;
+		case GLFW_KEY_UP:
+			grados = grados + 2;
+			break;
+		case GLFW_KEY_DOWN:
+			grados = grados - 2;
+			break;
+		case GLFW_KEY_Z:
+			planoCercano += 0.001;
+			break;
+		case GLFW_KEY_X:
+			planoCercano -= 0.001;
+			break;
 		}
 	}
 }
@@ -224,6 +246,7 @@ bool processInput(bool continueApplication) {
 	return continueApplication;
 }
 
+
 void applicationLoop() {
 	bool psi = true;
 	double lastTime = TimeManager::Instance().GetTime();
@@ -243,33 +266,37 @@ void applicationLoop() {
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
 		shader.turnOn();
 
 		GLint modelLoc = shader.getUniformLocation("model");
 		GLint viewLoc = shader.getUniformLocation("view");
 		GLint projLoc = shader.getUniformLocation("projection");
-
+		
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -7.0f));
-		//glm::mat4 projection = glm::perspective(glm::radians(45.0f), 
-			//(float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
-		//glmat4 crea una matriz de 4x4
+		//glm mat4 crea una matriz de 4x4
+		glm::mat4 projection;
+
+
+		
 		//glm::ortho rea una matriz de proyeccion ortogonal
 		//params: plano izquierdo, plano derecho, plano abajo, plano arriba,
 		//			plano cercano, plano lejano
 		//glm::mat4 projection = glm::ortho(-4.0, 4.0, -4.0 , 4.0, 0.01, 100.0);
 
-		//glm::frustum crea una matriz de proyeccion en perspectiva
-		//params: plano izquierdo, plano derecho, plano abajo, plano arriba,
-		//			plano cercano, plano lejano
-		//glm::mat4 projection = glm::frustum(-0.005, 0.005, -0.005, 0.005, 0.01, 100.0);
-
-		//glm::perspective crea una proyeccion en perspectiva que cambia respecto
-		//a las dimensiones de la ventana
-		//params: 
-		//			plano cercano, plano lejano
-		glm::mat4 projection = glm::perspective(glm::radians(45.0f),
-			(float)(screenWidth/screenHeight),0.01f, 100.0f);
+		if(proyeccion)
+				//glm::frustum crea una matriz de proyeccion en perspectiva
+				//params: plano izquierdo, plano derecho, plano abajo, plano arriba,
+				//			plano cercano, plano lejano
+				projection = glm::frustum(-0.005, 0.005, -0.005, 0.005, planoCercano, 100.0);
+		else {
+				//glm::perspective crea una proyeccion en perspectiva que cambia respecto
+				//a las dimensiones de la ventana
+				//params: 
+				//			plano cercano, plano lejano
+				projection = glm::perspective(glm::radians(grados),
+					(float)(screenWidth/screenHeight),0.01f, 100.0f);
+		}
+		
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
