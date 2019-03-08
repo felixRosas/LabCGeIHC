@@ -28,14 +28,14 @@ struct Vertex {
 // This is for the render with index element
 Vertex vertices[] =
 {
-	{ glm::vec3(-0.5f, -0.5f, 0.5f) , glm::vec3(1.0f, 0.0f, 0.0f) },
-	{ glm::vec3(0.5f , -0.5f, 0.5f) , glm::vec3(0.0f, 1.0f, 0.0f) },
-	{ glm::vec3(0.5f ,  0.5f, 0.5f) , glm::vec3(0.0f, 0.0f, 1.0f) },
-	{ glm::vec3(-0.5f,  0.5f, 0.5f) , glm::vec3(1.0f, 0.0f, 1.0f) },
-	{ glm::vec3(0.5f , -0.5f, -0.5f), glm::vec3(1.0f, 0.0f, 0.0f) },
-	{ glm::vec3(0.5f ,  0.5f, -0.5f), glm::vec3(1.0f, 0.0f, 1.0f) },
-	{ glm::vec3(-0.5f , 0.5f, -0.5f) ,glm::vec3(0.0f, 0.0f, 1.0f) },
-	{ glm::vec3(-0.5f , -0.5f, -0.5f),glm::vec3(0.0f, 1.0f, 0.0f) },
+	{ glm::vec3(-0.5f, -0.5f, 0.5f) , glm::vec3(0.0f, 0.0f, 0.5f) },
+	{ glm::vec3(0.5f , -0.5f, 0.5f) , glm::vec3(0.0f, 0.0f, 0.5f) },
+	{ glm::vec3(0.5f ,  0.5f, 0.5f) , glm::vec3(0.0f, 0.0f, 0.5f) },
+	{ glm::vec3(-0.5f,  0.5f, 0.5f) , glm::vec3(0.0f, 0.5f, 0.0f) },
+	{ glm::vec3(0.5f , -0.5f, -0.5f), glm::vec3(0.0f, 0.5f, 0.0f) },
+	{ glm::vec3(0.5f ,  0.5f, -0.5f), glm::vec3(0.0f, 0.5f, 0.0f) },
+	{ glm::vec3(-0.5f , 0.5f, -0.5f) ,glm::vec3(0.5f, 0.0f, 0.0f) },
+	{ glm::vec3(-0.5f , -0.5f, -0.5f),glm::vec3(0.5f, 0.0f, 0.0f) },
 };
 
 GLuint indices[] = {  // Note that we start from 0!
@@ -235,7 +235,7 @@ void applicationLoop() {
 
 
 	glm::vec3 cubePositions[] = { 
-		glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-2.0f, -5.0f, -15.0f),
+		glm::vec3(1.5f, -2.0f, 0.0f), glm::vec3(-2.0f, -5.0f, -15.0f),
 		glm::vec3(-1.5f, 2.2f, -2.5f), glm::vec3(1.8f, 1.0f, -12.3f),
 		glm::vec3(4.4f, -0.4f, -3.5f), glm::vec3(-6.7f, 3.0f, -7.5f),
 		glm::vec3(-4.3f, -3.0f, -2.5f), glm::vec3(3.5f, 8.0f, -2.5f),
@@ -259,13 +259,25 @@ void applicationLoop() {
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -8.0f));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-
-		glm::mat4 model = glm::mat4(1.0f);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
+		
 		glBindVertexArray(VAO);
-		// This is for the render with index element
-		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (GLuint *)0);
+		
+		float scale = 1.0;
+		for (int i = 0; i < 10; i++) {
+			glm::mat4 model = glm::translate(
+				glm::mat4(1.0f),
+				cubePositions[i]
+			);
+			model = glm::rotate(model, (float) i / -3.1416f, glm::vec3(1.0f, 0.3f, 0.0f));
+			model = glm::scale(model,
+				glm::vec3(scale));
+			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+			// This is for the render with index element
+			glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (GLuint *)0);
+			scale += 0.05;
+
+		}
 		glBindVertexArray(0);
 
 		shader.turnOff();
