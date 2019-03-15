@@ -18,6 +18,7 @@
 
 Sphere sphere(20, 20);
 Cylinder cylinder(20, 20, 0.5, 0.5);
+Cylinder cylinder2(20, 20, 0.6, 0.45);
 Box box;
 
 //GLM include
@@ -48,6 +49,11 @@ void init(int width, int height, std::string strTitle, bool bFullScreen);
 void destroyWindow();
 void destroy();
 bool processInput(bool continueApplication = true);
+double planoCercano = 0.01;
+float camaraX = 0.0f;
+float camaraY = 0.0f;
+float camaraZ = -8.0f;
+
 
 // Implementacion de todas las funciones.
 void init(int width, int height, std::string strTitle, bool bFullScreen) {
@@ -110,6 +116,10 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	cylinder.init();
 	cylinder.setShader(&shader);
 	cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
+	
+	cylinder2.init();
+	cylinder2.setShader(&shader);
+	cylinder2.setColor(glm::vec3(0.8, 0.3, 1.0));
 
 	box.init();
 	box.setShader(&shader);
@@ -128,6 +138,7 @@ void destroy() {
 	shader.destroy();
 	sphere.destroy();
 	cylinder.destroy();
+	cylinder2.destroy();
 }
 
 void reshapeCallback(GLFWwindow* Window, int widthRes, int heightRes) {
@@ -141,6 +152,24 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 		switch (key) {
 		case GLFW_KEY_ESCAPE:
 			exitApp = true;
+			break;
+		case GLFW_KEY_UP:
+			camaraY = camaraY - 1;
+			break;
+		case GLFW_KEY_DOWN:
+			camaraY = camaraY + 1;
+			break;
+		case GLFW_KEY_LEFT:
+			camaraX = camaraX + 1;
+			break;
+		case GLFW_KEY_RIGHT:
+			camaraX = camaraX - 1;
+			break;
+		case GLFW_KEY_Q:
+			camaraZ = camaraZ + 1;
+			break;
+		case GLFW_KEY_W:
+			camaraZ = camaraZ - 1;
 			break;
 		}
 	}
@@ -190,7 +219,7 @@ void applicationLoop() {
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f),
 			(float)screenWidth / screenWidth, 0.01f, 100.0f);
 		//matriz de vista
-		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -8.0f));	//cambiar ese valor de la camara mediante teclado
+		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(camaraX, camaraY, camaraZ));	//cambiar ese valor de la camara mediante teclado
 
 
 		//matriz con diagonal untaria
@@ -216,6 +245,20 @@ void applicationLoop() {
 										//Generamos nuevo cilindro para pie izquierdo(Matrix2)
 										glm::mat4 matrix2 = glm::rotate(matrixs4, 0.3f, glm::vec3(0.0f, 0.0f, 1.0f));
 										matrix2 = glm::translate(matrix2, glm::vec3(0.0f, -0.3f, 0.0f));
+												//pie
+												glm::mat4 matrixs12 = glm::translate(matrix2, glm::vec3(0.0f, -0.3f, 0.0f));
+														glm::mat4 matrix7 = glm::rotate(matrixs12, 1.5f, glm::vec3(0.0f, 0.0f, -1.0f));
+														matrix7 = glm::translate(matrix7, glm::vec3(0.0f, -0.1f, 0.0f));
+														matrix7 = glm::scale(matrix7, glm::vec3(0.1, 0.2, 0.2));
+														cylinder.setProjectionMatrix(projection);
+														cylinder.setViewMatrix(view);
+														cylinder.enableWireMode();
+														cylinder.render(matrix7);
+												matrixs12 = glm::scale(matrixs12, glm::vec3(0.1f, 0.1f, 0.1f));
+												sphere.setProjectionMatrix(projection);
+												sphere.setViewMatrix(view);
+												sphere.enableWireMode();
+												sphere.render(matrixs12);
 										matrix2 = glm::scale(matrix2, glm::vec3(0.1, 0.6, 0.2));
 										cylinder.setProjectionMatrix(projection);
 										cylinder.setViewMatrix(view);
@@ -240,7 +283,44 @@ void applicationLoop() {
 				//matrixs3 es la esfera que une cuerpo con pierna derecha
 				glm::mat4 matrixs3 = glm::translate(matrixs1, glm::vec3(0.225f, 0.0f, 0.0f));
 						//antes de escalar matrixs3
-						
+						//pierna izquierda
+						glm::mat4 matrix8 = glm::rotate(matrixs3, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));	//rotacion en z de -0.2
+						matrix8 = glm::translate(matrix8, glm::vec3(0.0, -0.4, 0.0));
+								//matrixs4 es rodilla izquierda.
+								glm::mat4 matrixs13 = glm::translate(matrix8, glm::vec3(0.0f, -0.4f, 0.0f));
+								//pegamos antes de escalar matrixs4
+										//Generamos nuevo cilindro para pie izquierdo(Matrix2)
+										glm::mat4 matrix9 = glm::rotate(matrixs13, 0.3f, glm::vec3(0.0f, 0.0f, -1.0f));
+										matrix9 = glm::translate(matrix9, glm::vec3(0.0f, -0.3f, 0.0f));
+												//pie
+												glm::mat4 matrixs14 = glm::translate(matrix9, glm::vec3(0.0f, -0.3f, 0.0f));
+														glm::mat4 matrix10 = glm::rotate(matrixs14, 1.5f, glm::vec3(0.0f, 0.0f, 1.0f));
+														matrix10 = glm::translate(matrix10, glm::vec3(0.0f, -0.1f, 0.0f));
+														matrix10 = glm::scale(matrix10, glm::vec3(0.1, 0.2, 0.2));
+														cylinder.setProjectionMatrix(projection);
+														cylinder.setViewMatrix(view);
+														cylinder.enableWireMode();
+														cylinder.render(matrix10);
+												matrixs14 = glm::scale(matrixs14, glm::vec3(0.1f, 0.1f, 0.1f));
+												sphere.setProjectionMatrix(projection);
+												sphere.setViewMatrix(view);
+												sphere.enableWireMode();
+												sphere.render(matrixs14);
+										matrix9 = glm::scale(matrix9, glm::vec3(0.1, 0.6, 0.2));
+										cylinder.setProjectionMatrix(projection);
+										cylinder.setViewMatrix(view);
+										cylinder.enableWireMode();
+										cylinder.render(matrix9);
+								matrixs13 = glm::scale(matrixs13, glm::vec3(0.1f, 0.1f, 0.1f));
+								sphere.setProjectionMatrix(projection);
+								sphere.setViewMatrix(view);
+								sphere.enableWireMode();
+								sphere.render(matrixs13);
+						matrix8 = glm::scale(matrix8, glm::vec3(0.15f, 0.8f, 0.15f));
+						cylinder.setProjectionMatrix(projection);
+						cylinder.setViewMatrix(view);
+						cylinder.enableWireMode();
+						cylinder.render(matrix8);
 				matrixs3 = glm::scale(matrixs3, glm::vec3(0.1f, 0.1f, 0.1f));
 				sphere.setProjectionMatrix(projection);
 				sphere.setViewMatrix(view);
@@ -256,6 +336,14 @@ void applicationLoop() {
 	//*****************************************	PARTE SUPERIOR**************************************************
 			//esfera enmedio arriba cabeza
 			glm::mat4 matrixs5 = glm::translate(matrix0, glm::vec3(0.0f, 0.5f, 0.0f));
+					//CABEZA
+					glm::mat4 matrix11 = glm::mat4(1.0f);
+					matrix11 = glm::translate(matrixs5, glm::vec3(0.0f, 0.5f, 0.0f));
+					matrix11 = glm::scale(matrix11, glm::vec3(0.4f, 0.6f, 0.4f));
+					cylinder2.setProjectionMatrix(projection);
+					cylinder2.setViewMatrix(view);
+					cylinder2.enableWireMode();
+					cylinder2.render(matrix11);
 					//		BRAZO DERECHO
 					//esfera antes del brazo derecho
 					glm::mat4 matrixs6 = glm::translate(matrixs5, glm::vec3(0.3f, 0.0f, 0.0f));
