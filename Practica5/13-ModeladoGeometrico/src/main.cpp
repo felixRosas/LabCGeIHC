@@ -253,6 +253,7 @@ void applicationLoop() {
 														cylinder.setProjectionMatrix(projection);
 														cylinder.setViewMatrix(view);
 														cylinder.enableWireMode();
+														cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 														cylinder.render(matrix7);
 												matrixs12 = glm::scale(matrixs12, glm::vec3(0.1f, 0.1f, 0.1f));
 												sphere.setProjectionMatrix(projection);
@@ -263,6 +264,7 @@ void applicationLoop() {
 										cylinder.setProjectionMatrix(projection);
 										cylinder.setViewMatrix(view);
 										cylinder.enableWireMode();
+										cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 										cylinder.render(matrix2);
 								matrixs4 = glm::scale(matrixs4, glm::vec3(0.1f, 0.1f, 0.1f));
 								sphere.setProjectionMatrix(projection);
@@ -273,6 +275,7 @@ void applicationLoop() {
 						cylinder.setProjectionMatrix(projection);
 						cylinder.setViewMatrix(view);
 						cylinder.enableWireMode();
+						cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 						cylinder.render(matrix1);
 				matrixs2 = glm::scale(matrixs2, glm::vec3(0.1f, 0.1f, 0.1f));
 				sphere.setProjectionMatrix(projection);
@@ -300,16 +303,19 @@ void applicationLoop() {
 														cylinder.setProjectionMatrix(projection);
 														cylinder.setViewMatrix(view);
 														cylinder.enableWireMode();
+														cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 														cylinder.render(matrix10);
 												matrixs14 = glm::scale(matrixs14, glm::vec3(0.1f, 0.1f, 0.1f));
 												sphere.setProjectionMatrix(projection);
 												sphere.setViewMatrix(view);
 												sphere.enableWireMode();
+												cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 												sphere.render(matrixs14);
 										matrix9 = glm::scale(matrix9, glm::vec3(0.1, 0.6, 0.2));
 										cylinder.setProjectionMatrix(projection);
 										cylinder.setViewMatrix(view);
 										cylinder.enableWireMode();
+										cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 										cylinder.render(matrix9);
 								matrixs13 = glm::scale(matrixs13, glm::vec3(0.1f, 0.1f, 0.1f));
 								sphere.setProjectionMatrix(projection);
@@ -320,6 +326,7 @@ void applicationLoop() {
 						cylinder.setProjectionMatrix(projection);
 						cylinder.setViewMatrix(view);
 						cylinder.enableWireMode();
+						cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 						cylinder.render(matrix8);
 				matrixs3 = glm::scale(matrixs3, glm::vec3(0.1f, 0.1f, 0.1f));
 				sphere.setProjectionMatrix(projection);
@@ -343,6 +350,7 @@ void applicationLoop() {
 					cylinder2.setProjectionMatrix(projection);
 					cylinder2.setViewMatrix(view);
 					cylinder2.enableWireMode();
+					cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 					cylinder2.render(matrix11);
 					//		BRAZO DERECHO
 					//esfera antes del brazo derecho
@@ -365,6 +373,7 @@ void applicationLoop() {
 											cylinder.setProjectionMatrix(projection);
 											cylinder.setViewMatrix(view);
 											cylinder.enableWireMode();
+											cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 											cylinder.render(matrix5);
 									matrixs8 = glm::scale(matrixs8, glm::vec3(0.1f, 0.1f, 0.1f));
 									sphere.setProjectionMatrix(projection);
@@ -375,6 +384,7 @@ void applicationLoop() {
 							cylinder.setProjectionMatrix(projection);
 							cylinder.setViewMatrix(view);
 							cylinder.enableWireMode();
+							cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 							cylinder.render(matrix3);
 					matrixs6 = glm::scale(matrixs6, glm::vec3(0.1f, 0.1f, 0.1f));
 					sphere.setProjectionMatrix(projection);
@@ -403,6 +413,7 @@ void applicationLoop() {
 											cylinder.setProjectionMatrix(projection);
 											cylinder.setViewMatrix(view);
 											cylinder.enableWireMode();
+											cylinder.setColor(glm::vec3(0.0, 0.3, 1.0));
 											cylinder.render(matrix6);
 									matrixs10 = glm::scale(matrixs10, glm::vec3(0.1f, 0.1f, 0.1f));
 									sphere.setProjectionMatrix(projection);
@@ -413,6 +424,7 @@ void applicationLoop() {
 							cylinder.setProjectionMatrix(projection);
 							cylinder.setViewMatrix(view);
 							cylinder.enableWireMode();
+							cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 							cylinder.render(matrix4);
 					matrixs7 = glm::scale(matrixs7, glm::vec3(0.1f, 0.1f, 0.1f));
 					sphere.setProjectionMatrix(projection);
@@ -431,6 +443,7 @@ void applicationLoop() {
 		cylinder.setProjectionMatrix(projection);
 		cylinder.setViewMatrix(view);
 		cylinder.enableWireMode();
+		cylinder.setColor(glm::vec3(0.8, 0.3, 1.0));
 		cylinder.render(matrix0);		
 
 
