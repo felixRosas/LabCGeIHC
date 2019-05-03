@@ -48,6 +48,7 @@ in vec2 our_uv;
 uniform int pointLightCount;
 uniform int spotLightCount;
 
+//se define una luz direccional y los arreglos de las luces puntuales y spot
 uniform DirectionalLight directionalLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
