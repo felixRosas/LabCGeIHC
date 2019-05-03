@@ -54,6 +54,7 @@ Model modelTrain;
 Model sample;
 Model cabaña;
 Model piper;
+Model casa;
 
 GLuint textureID1, textureID2, textureID3, textureCespedID, textureWaterID, textureCubeTexture;
 GLuint cubeTextureID;
@@ -171,6 +172,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	sample.loadModel("../../models/cyborg/cyborg.obj");
 	cabaña.loadModel("../../models/cabaña/WoodenCabinObj.obj");
 	piper.loadModel("../../models/elefante/elefante.obj");
+	casa.loadModel("../../models/house/house2.obj");
 	
 	camera->setPosition(glm::vec3(0.0f, 3.0f, -1.0f));
 	
@@ -521,13 +523,19 @@ void applicationLoop() {
 		sample.setScale(glm::vec3(1.0, 1.0, 1.0));
 		sample.render();
 		
+		casa.setShader(&shaderLighting);
+		casa.setProjectionMatrix(projection);
+		casa.setViewMatrix(view);
+		casa.setPosition(glm::vec3(-20.0, 0.0, -10.0));
+		casa.setScale(glm::vec3(1.0, 1.0, 1.0));
+		casa.render();
 
 		cabaña.setShader(&shaderLighting);
 		cabaña.setProjectionMatrix(projection);
 		cabaña.setViewMatrix(view);
 		cabaña.setPosition(glm::vec3(-20.0, 0.0, -10.0));
 		cabaña.setScale(glm::vec3(0.1, 0.1, 0.1));
-		cabaña.render();
+		//cabaña.render();
 		
 
 		piper.setShader(&shaderLighting);
