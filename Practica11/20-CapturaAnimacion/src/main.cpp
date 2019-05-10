@@ -454,7 +454,7 @@ void applicationLoop() {
 	std::stringstream ss;
 
 	std::ofstream myfile;
-	myfile.open("../../animaciones/animationMano.txt");
+	myfile.open("../../animaciones/animationMano.txt");	//nombre del archivo
 
 	while (psi) {
 		psi = processInput(true);
@@ -504,10 +504,11 @@ void applicationLoop() {
 		glm::mat4 matrixL0 = glm::mat4(1.0f);
 		
 		// Se modela siempre con los ejes de giro en el eje z
+		//convencion de denavit.hatenberg para calcular la cinematica directa de un cuerpo rigido
 		// Articulacion 1
 		matrixL0 = glm::rotate(matrixL0, rot1, glm::vec3(0.0f, 0.0f, 1.0f));
 		if (saveFrame)
-			ss << matToString(matrixL0) << "|";
+			ss << matToString(matrixL0) << "|";			//vamos concatenando toda las matrices de rotacion
 		glm::mat4 cylinderMatrixJ0 = glm::rotate(matrixL0, 1.5708f, glm::vec3(1.0, 0.0f, 0.0));
 		cylinderMatrixJ0 = glm::scale(cylinderMatrixJ0, glm::vec3(0.08f, 0.08f, 0.08f));
 		sphereAnimacion.render(cylinderMatrixJ0);

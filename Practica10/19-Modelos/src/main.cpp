@@ -47,14 +47,15 @@ Shader shaderSpotLight;
 Shader shaderLighting;		//Shader de multiples luces 
 
 Model modelRock;
-Model modelRail;
 Model modelAirCraft;
-Model arturito;
-Model modelTrain;
 Model sample;
 Model cabaña;
 Model piper;
-Model casa;
+Model computadora;
+Model silla;
+Model pizarron;
+Model proyector;
+Model Avion;
 
 GLuint textureID1, textureID2, textureID3, textureCespedID, textureWaterID, textureCubeTexture;
 GLuint cubeTextureID;
@@ -167,12 +168,15 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	boxWater.scaleUVS(glm::vec2(1.0, 1.0));
 												//se cargan los modelos
 	modelRock.loadModel("../../models/rock/rock.obj");
-	//modelRail.loadModel("../../models/railroad/railroad_track.obj");
 	modelAirCraft.loadModel("../../models/Aircraft_obj/E 45 Aircraft_obj.obj");
 	sample.loadModel("../../models/cyborg/cyborg.obj");
 	cabaña.loadModel("../../models/cabaña/WoodenCabinObj.obj");
 	piper.loadModel("../../models/elefante/elefante.obj");
-	casa.loadModel("../../models/house/house2.obj");
+	computadora.loadModel("../../models/computadora/computadora.obj");
+	silla.loadModel("../../models/silla/silla.obj");
+	pizarron.loadModel("../../models/pizarron/pizarron.obj");
+	proyector.loadModel("../../models/radio/radio.obj");
+	Avion.loadModel("../../models/avioneta/avioneta.obj");
 	
 	camera->setPosition(glm::vec3(0.0f, 3.0f, -1.0f));
 	
@@ -382,6 +386,7 @@ void applicationLoop() {
 	double lastTime = TimeManager::Instance().GetTime();
 
 	float angle = 0.0;
+	float orbitax, orbitaz, radio;
 	float ratio = 20.0;
 
 	float aircraftZ = 0.0;
@@ -489,7 +494,21 @@ void applicationLoop() {
 		glUniform3f(shaderLighting.getUniformLocation("spotLights[0].light.diffuse"), 0.7, 0.2, 0.6);
 		glUniform3f(shaderLighting.getUniformLocation("spotLights[0].light.specular"), 0.1, 0.7, 0.8);
 		shaderLighting.turnOff();
+		
+		if (angle > 2 * M_PI)
+			angle = 0.0;
+		else
+			angle += 0.01;
 
+		radio = 20.0;
+		orbitax = radio * glm::cos(glm::radians(angle));
+		orbitaz = radio * glm::sin(glm::radians(angle));
+
+		glm::mat4 Modelmatrix = glm::translate(Modelmatrix, glm::vec3(orbitax, 0.0f, orbitaz));
+		Modelmatrix = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 0.0f, 1.0f));
+		Modelmatrix = glm::translate(Modelmatrix, glm::vec3(1.0, 10.0, 1.0));
+		//Modelmatrix = glm::rotate(Modelmatrix, glm::radians(180.0f), glm::vec3(1, 0, 0));
+		
 
 		//Se settea el shader con multiples luces
 		modelRock.setShader(&shaderLighting);
@@ -497,38 +516,55 @@ void applicationLoop() {
 		modelRock.setViewMatrix(view);
 		modelRock.setPosition(glm::vec3(5.0, 3.0, -20.0));
 		modelRock.setScale(glm::vec3(1.0, 1.0, 1.0));
-		modelRock.render();
+		//modelRock.render();
 
-		/*modelRail.setShader(&shaderLighting);
-		modelRail.setProjectionMatrix(projection);
-		modelRail.setViewMatrix(view);
-		modelRail.setPosition(glm::vec3(-10.0, 0.0, 25.0));
-		modelRail.setScale(glm::vec3(1.0, 1.0, 1.0));
-		modelRail.render();*/
 
 		modelAirCraft.setShader(&shaderLighting);
 		modelAirCraft.setProjectionMatrix(projection);
 		modelAirCraft.setViewMatrix(view);
 		modelAirCraft.setScale(glm::vec3(1.0, 1.0, 1.0));
 		// Se rota el modelos, se coloca en la posicion deseada y se hace el desplazamiento en eje z
-		glm::mat4 matrixAirCraft = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, aircraftZ));
+		/*glm::mat4 matrixAirCraft = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, aircraftZ));
 		matrixAirCraft = glm::translate(matrixAirCraft, glm::vec3(10.0, 1.0, 15.0));
 		matrixAirCraft = glm::rotate(matrixAirCraft, rotationAirCraft, glm::vec3(0, 1, 0));
-		modelAirCraft.render(matrixAirCraft);
+		modelAirCraft.render(matrixAirCraft);*/
 
 		sample.setShader(&shaderLighting);
 		sample.setProjectionMatrix(projection);
 		sample.setViewMatrix(view);
 		sample.setPosition(glm::vec3(5.0, 3.0, 20.0));
 		sample.setScale(glm::vec3(1.0, 1.0, 1.0));
-		sample.render();
+		//sample.render();
 		
-		casa.setShader(&shaderLighting);
-		casa.setProjectionMatrix(projection);
-		casa.setViewMatrix(view);
-		casa.setPosition(glm::vec3(-20.0, 0.0, -10.0));
-		casa.setScale(glm::vec3(1.0, 1.0, 1.0));
-		casa.render();
+		computadora.setShader(&shaderLighting);
+		computadora.setProjectionMatrix(projection);
+		computadora.setViewMatrix(view);
+		computadora.setPosition(glm::vec3(-20.0, 0.0, -10.0));
+		computadora.setScale(glm::vec3(0.5, 0.5, 0.5));
+		//computadora.render();
+
+		pizarron.setShader(&shaderLighting);
+		pizarron.setProjectionMatrix(projection);
+		pizarron.setViewMatrix(view);
+		pizarron.setPosition(glm::vec3(-20.0, 4.0, -10.0));
+		pizarron.setScale(glm::vec3(0.5, 0.5, 0.5));
+		//pizarron.render();
+
+		silla.setShader(&shaderLighting);
+		silla.setProjectionMatrix(projection);
+		silla.setViewMatrix(view);
+		silla.setPosition(glm::vec3(-20.0, 0.0, -5.0));
+		silla.setScale(glm::vec3(1.0, 1.0, 1.0));
+		//silla.render();
+
+		
+		proyector.setShader(&shaderLighting);
+		proyector.setProjectionMatrix(projection);
+		proyector.setViewMatrix(view);
+		proyector.setPosition(glm::vec3(-20.0, 0.0, -5.0));
+		proyector.setScale(glm::vec3(1.0, 1.0, 1.0));
+		//proyector.render();
+		
 
 		cabaña.setShader(&shaderLighting);
 		cabaña.setProjectionMatrix(projection);
@@ -544,11 +580,16 @@ void applicationLoop() {
 		piper.setScale(glm::vec3(1.0, 1.0, 1.0));
 		// Se rota el modelos, se coloca en la posicion deseada y se hace el desplazamiento en eje z
 		glm::mat4 matrixModelo = glm::translate(glm::mat4(1.0f), glm::vec3(avance2, 0.0, avance));
-		matrixModelo = glm::translate(matrixModelo, glm::vec3(-10.0, 3.0, 15.0));
+		matrixModelo = glm::translate(matrixModelo, glm::vec3(-10.0, 30.0, 15.0));
 		matrixModelo = glm::rotate(matrixModelo, rotacionModelo, glm::vec3(0, 1, 0));
 		matrixModelo = glm::rotate(matrixModelo, glm::radians(180.0f), glm::vec3(0, 1, 0));
-		piper.render(matrixModelo);
+		//piper.render(matrixModelo);
 		
+		Avion.setShader(&shaderLighting);
+		Avion.setProjectionMatrix(projection);
+		Avion.setViewMatrix(view);
+		Avion.setScale(glm::vec3(0.5, 0.5, 0.5));
+		Avion.render(Modelmatrix);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureCespedID);
@@ -568,20 +609,17 @@ void applicationLoop() {
 		boxWater.setScale(glm::vec3(10.0, 0.001, 10.0));
 		//se realiza el offset de la textura 
 		boxWater.offsetUVS(glm::vec2(0.0001, 0.0001));
-		boxWater.render();
+		//boxWater.render();
 
-		if (angle > 2 * M_PI)
-			angle = 0.0;
-		else
-			angle += 0.001;
+		
 
 		sphere.setShader(&shaderColor);
 		sphere.setColor(glm::vec3(0.4f, 0.3f, 0.6f));
 		sphere.setProjectionMatrix(projection);
 		sphere.setViewMatrix(view);
 		sphere.setScale(glm::vec3(1.0f, 1.0f, 1.0f));
-		sphere.enableWireMode();
-		sphere.render(lightModelmatrix);
+		//sphere.enableWireMode();
+		//sphere.render(lightModelmatrix);
 
 		// Se Dibuja el Skybox
 		shaderCubeTexture.turnOn();
@@ -602,6 +640,7 @@ void applicationLoop() {
 		glCullFace(oldCullFaceMode);
 		glDepthFunc(oldDepthFuncMode);
 		shaderCubeTexture.turnOff();
+
 
 		
 		//Desplazamientos del modelo (ANIMACION)
@@ -635,7 +674,6 @@ void applicationLoop() {
 				}
 			}
 		}
-
 		
 
 		//Desplazamientos del modelo (OTRO METODO)
@@ -680,7 +718,7 @@ void applicationLoop() {
 			}
 		}
 		else {
-			rotacionModelo += 0.01;
+			rotacionModelo += 0.08;
 			if (!direccionModelo && direccion2Modelo) {
 				if (rotacionModelo > glm::radians(90.0f)) {
 					finalRotacion = true;

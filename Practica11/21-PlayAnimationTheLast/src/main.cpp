@@ -473,10 +473,13 @@ void applicationLoop() {
 	float rotationAirCraft = 0.0;
 	bool finishRotation = true;
 
+	//se obtienen lo frames del brazo 
 	std::vector<std::vector<glm::mat4>> keyFramesBrazo = getKeyFrames("../../animaciones/animationMano.txt");
-	int numPasosAnimBrazo = 200;
+	// NUMERO DE PASOS PARA ALCANZAR DEL FRAME i-1 AL FRAME i
+	int numPasosAnimBrazo = 100;	
 	int numPasosAnimBrazoCurr = 0;
 
+	// indice del arreglo keyframes brazo, el actual y el siguiente
 	int indexKeyFrameBrazoCurr = 0;
 	int indexKeyFrameBrazoNext = 1;
 	float interpolation = 0.0;
@@ -604,13 +607,21 @@ void applicationLoop() {
 		glBindTexture(GL_TEXTURE_2D, textureID3);
 		if (keyFramesBrazo[indexKeyFrameBrazoCurr].size() == 7 && keyFramesBrazo[indexKeyFrameBrazoNext].size() == 7) {
 
+			// Matriz de rotacion actual
 			firstQuat = glm::quat_cast(keyFramesBrazo[indexKeyFrameBrazoCurr][0]);
 			secondQuat = glm::quat_cast(keyFramesBrazo[indexKeyFrameBrazoNext][0]);
+			// slerp hace la interpolacion del quaternion (matriz de rotacion)
 			finalQuat = glm::slerp(firstQuat, secondQuat, interpolation);
+			// Se convierte el quaternion a matriz de 4x4
 			interpoltaedMatrix = glm::mat4_cast(finalQuat);
+			// Se obtiene la traslacion del fram i-1
 			transformComp1 = keyFramesBrazo[indexKeyFrameBrazoCurr][0] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			// Se obtiene la traslacion del frame i
 			transformComp2 = keyFramesBrazo[indexKeyFrameBrazoNext][0] * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			// Se realiza la interpolacion entre el frame i-1 y el frame i
+			//transformComp1 es el frame i-1
 			finalTrans = (float)(1.0 - interpolation) * transformComp1 + transformComp2 * interpolation;
+			// Unimoo l matriz de interpolacion del quaternion y la interpolacion de traslacion
 			interpoltaedMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(finalTrans)) * interpoltaedMatrix;
 
 			// Animacion KeyFrames
@@ -715,12 +726,14 @@ void applicationLoop() {
 		interpolation = numPasosAnimBrazoCurr / (float)numPasosAnimBrazo;
 
 		if (interpolation >= 1.0) {
+			interpolation = 0.0;
 			numPasosAnimBrazoCurr = 0;
 			indexKeyFrameBrazoCurr = indexKeyFrameBrazoNext;
 			indexKeyFrameBrazoNext++;
 		}
 
 		if (indexKeyFrameBrazoNext > keyFramesBrazo.size() - 1) {
+			interpolation = 0.0;
 			indexKeyFrameBrazoCurr = 0;
 			indexKeyFrameBrazoNext = 1;
 		}
@@ -752,7 +765,7 @@ void applicationLoop() {
 		boxWater.setPosition(glm::vec3(3.0, 2.0, -5.0));
 		boxWater.setScale(glm::vec3(10.0, 0.001, 10.0));
 		boxWater.offsetUVS(glm::vec2(0.0001, 0.0001));
-		boxWater.render();
+		//boxWater.render();
 
 		if (angle > 2 * M_PI)
 			angle = 0.0;

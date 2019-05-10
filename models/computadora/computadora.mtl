@@ -1,0 +1,117 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl FrontColor
+Ka 0.000000 0.000000 0.000000
+Kd 0.890196 0.882353 0.870588
+Ks 0.330000 0.330000 0.330000
+
+newmtl Color_008
+Ka 0.000000 0.000000 0.000000
+Kd 0.117647 0.117647 0.117647
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_008.jpg
+
+newmtl Color_000
+Ka 0.000000 0.000000 0.000000
+Kd 0.980392 0.980392 0.980392
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_000.jpg
+
+newmtl Color_009
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_009.jpg
+
+newmtl Color_006
+Ka 0.000000 0.000000 0.000000
+Kd 0.337255 0.337255 0.337255
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_006.jpg
+
+newmtl Fencing_Diamond_Mesh
+Ka 0.000000 0.000000 0.000000
+Kd 0.615686 0.607843 0.600000
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Fencing_Diamond_Mesh.png
+
+newmtl Color_I06
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.800000
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_I06.jpg
+
+newmtl Color_I02
+Ka 0.000000 0.000000 0.000000
+Kd 0.192157 0.196078 1.000000
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_I02.jpg
+
+newmtl Color_005
+Ka 0.000000 0.000000 0.000000
+Kd 0.447059 0.447059 0.447059
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_005.jpg
+
+newmtl Color_F12
+Ka 0.000000 0.000000 0.000000
+Kd 0.356863 0.600000 0.117647
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_F12.jpg
+
+newmtl Color_001
+Ka 0.000000 0.000000 0.000000
+Kd 0.886275 0.886275 0.886275
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_001.png
+
+newmtl Color_A01
+Ka 0.000000 0.000000 0.000000
+Kd 0.996078 0.000000 0.000000
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_A01.jpg
+
+newmtl Color_F01
+Ka 0.000000 0.000000 0.000000
+Kd 0.478431 1.000000 0.000000
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_F01.jpg
+
+newmtl Wood_Bamboo_Medium
+Ka 0.000000 0.000000 0.000000
+Kd 0.694118 0.411765 0.168627
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Wood_Bamboo_Medium.jpg
+
+newmtl _
+Ka 0.000000 0.000000 0.000000
+Kd 0.274510 0.274510 0.266667
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/_.jpg
+
+newmtl Color_007
+Ka 0.000000 0.000000 0.000000
+Kd 0.223529 0.223529 0.223529
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_007.jpg
+
+newmtl Color_D02
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 0.800000 0.196078
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_D02.jpg
+
+newmtl Color_D01
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 0.745098 0.000000
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_D01.jpg
+
+newmtl Color_I01
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.996078
+Ks 0.330000 0.330000 0.330000
+map_Kd computadora/Color_I01.jpg
+

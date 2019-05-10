@@ -1,0 +1,63 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl _Charcoal_
+Ka 0.000000 0.000000 0.000000
+Kd 0.137255 0.137255 0.137255
+Ks 0.330000 0.330000 0.330000
+map_Kd avioneta/_Charcoal_.jpg
+
+newmtl Color_008
+Ka 0.000000 0.000000 0.000000
+Kd 0.117647 0.117647 0.117647
+Ks 0.330000 0.330000 0.330000
+map_Kd avioneta/Color_008.jpg
+
+newmtl Color_D07
+Ka 0.000000 0.000000 0.000000
+Kd 0.796078 0.635294 0.160784
+Ks 0.330000 0.330000 0.330000
+map_Kd avioneta/Color_D07.jpg
+
+newmtl _Charcoal_1
+Ka 0.000000 0.000000 0.000000
+Kd 0.137255 0.137255 0.137255
+Ks 0.330000 0.330000 0.330000
+map_Kd avioneta/_Charcoal_1.jpg
+
+newmtl _2
+Ka 0.000000 0.000000 0.000000
+Kd 0.223529 0.443137 0.529412
+Ks 0.330000 0.330000 0.330000
+map_Kd avioneta/_2.jpg
+
+newmtl Translucent_Glass_Gray
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.330000 0.330000 0.330000
+d 0.660000
+
+newmtl FrontColor
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.330000 0.330000 0.330000
+
+newmtl M_96_96_96
+Ka 0.000000 0.000000 0.000000
+Kd 0.376471 0.376471 0.376471
+Ks 0.330000 0.330000 0.330000
+map_Kd avioneta/M_96_96_96.jpg
+
+newmtl Fencing_Diamond_Mesh
+Ka 0.000000 0.000000 0.000000
+Kd 0.615686 0.607843 0.600000
+Ks 0.330000 0.330000 0.330000
+map_Kd avioneta/Fencing_Diamond_Mesh.png
+
+newmtl _1
+Ka 0.000000 0.000000 0.000000
+Kd 0.447059 0.435294 0.403922
+Ks 0.330000 0.330000 0.330000
+map_Kd avioneta/_1.jpg
+

@@ -1,0 +1,41 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl M_0137_Black
+Ka 0.000000 0.000000 0.000000
+Kd 0.015686 0.000000 0.000000
+Ks 0.330000 0.330000 0.330000
+map_Kd Avion/M_0137_Black.png
+
+newmtl M_0135_DarkGray
+Ka 0.000000 0.000000 0.000000
+Kd 0.450980 0.466667 0.474510
+Ks 0.330000 0.330000 0.330000
+map_Kd Avion/M_0135_DarkGray.png
+
+newmtl M_0020_Red
+Ka 0.000000 0.000000 0.000000
+Kd 0.803922 0.000000 0.000000
+Ks 0.330000 0.330000 0.330000
+map_Kd Avion/M_0020_Red.png
+
+newmtl Metal_Corrugated_Shiny
+Ka 0.000000 0.000000 0.000000
+Kd 0.756863 0.756863 0.756863
+Ks 0.330000 0.330000 0.330000
+map_Kd Avion/Metal_Corrugated_Shiny.jpg
+
+newmtl Metal_Seamed
+Ka 0.000000 0.000000 0.000000
+Kd 0.462745 0.466667 0.450980
+Ks 0.330000 0.330000 0.330000
+map_Kd Avion/Metal_Seamed.jpg
+
+newmtl Translucent_Glass_Blue
+Ka 0.000000 0.000000 0.000000
+Kd 0.470588 0.819608 0.807843
+Ks 0.330000 0.330000 0.330000
+d 0.500000
+map_Kd Avion/Translucent_Glass_Blue.jpg
+

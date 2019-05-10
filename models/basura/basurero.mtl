@@ -1,0 +1,21 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl Color_G10
+Ka 0.000000 0.000000 0.000000
+Kd 0.639216 0.800000 0.635294
+Ks 0.330000 0.330000 0.330000
+map_Kd basurero/Color_G10.jpg
+
+newmtl Color_002
+Ka 0.000000 0.000000 0.000000
+Kd 0.776471 0.776471 0.776471
+Ks 0.330000 0.330000 0.330000
+map_Kd basurero/Color_002.jpg
+
+newmtl FrontColor
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.330000 0.330000 0.330000
+
